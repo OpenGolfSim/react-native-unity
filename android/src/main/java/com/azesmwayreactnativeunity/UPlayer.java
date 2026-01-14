@@ -94,10 +94,10 @@ public class UPlayer {
     public FrameLayout requestFrame() throws NoSuchMethodException {
         try {
             Method getFrameLayout = unityPlayer.getClass().getMethod("getFrameLayout");
-
             return (FrameLayout) getFrameLayout.invoke(unityPlayer);
         } catch (NoSuchMethodException | IllegalAccessException | InvocationTargetException e) {
-            return unityPlayer;
+            // For Unity 6 compatibility, replace unityPlayer reference with null
+            return null;
         }
     }
 

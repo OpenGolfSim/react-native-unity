@@ -51,32 +51,17 @@ project(':unityLibrary').projectDir=new File('../unity/builds/android/unityLibra
 
 const withGradlePropertiesMod: ConfigPlugin = (config) =>
   withGradleProperties(config, (modConfig) => {
-    const androidSdkPath = process.env.ANDROID_SDK_ROOT || "";
-    const androidNdkPath = process.env.ANDROID_NDK_ROOT || "";
     modConfig.modResults.push({
       type: 'property',
       key: 'unityStreamingAssets',
       value: '.unity3d',
     });
-    modConfig.modResults.push(
-      {
-        type: 'property',
-        key: 'unity.androidSdkPath',
-        value: androidSdkPath,
-      },
-      {
-        type: 'property',
-        key: 'unity.androidNdkPath',
-        value: androidNdkPath,
-      }
-    );
     return modConfig;
   });
 
 // add string
 const withStringsXMLMod: ConfigPlugin = (config) =>
   withStringsXml(config, (config) => {
-    // tools:replace="android:enableOnBackInvokedCallback"
     config.modResults = AndroidConfig.Strings.setStringItem(
       [
         {
@@ -93,7 +78,6 @@ const withStringsXMLMod: ConfigPlugin = (config) =>
 
 const withAndroidManifestMod: ConfigPlugin = (config) =>
   withAndroidManifest(config, (config) => {
-    // tools:replace="android:enableOnBackInvokedCallback"
     // Get the main manifest
     const manifest = config.modResults.manifest;
 

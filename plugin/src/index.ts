@@ -51,6 +51,8 @@ project(':unityLibrary').projectDir=new File('../unity/builds/android/unityLibra
 
 const withGradlePropertiesMod: ConfigPlugin = (config) =>
   withGradleProperties(config, (modConfig) => {
+    const androidSdkPath = process.env.ANDROID_SDK_ROOT || "";
+    const androidNdkPath = process.env.ANDROID_NDK_ROOT || "";
     modConfig.modResults.push({
       type: 'property',
       key: 'unityStreamingAssets',
@@ -60,12 +62,12 @@ const withGradlePropertiesMod: ConfigPlugin = (config) =>
       {
         type: 'property',
         key: 'unity.androidSdkPath',
-        value: '${ANDROID_SDK_ROOT}',
+        value: androidSdkPath,
       },
       {
         type: 'property',
         key: 'unity.androidNdkPath',
-        value: '${ANDROID_NDK_ROOT}',
+        value: androidNdkPath,
       }
     );
     return modConfig;

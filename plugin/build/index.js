@@ -30,6 +30,8 @@ project(':unityLibrary').projectDir=new File('../unity/builds/android/unityLibra
     return modConfig;
 });
 const withGradlePropertiesMod = (config) => (0, config_plugins_1.withGradleProperties)(config, (modConfig) => {
+    const androidSdkPath = process.env.ANDROID_SDK_ROOT || "";
+    const androidNdkPath = process.env.ANDROID_NDK_ROOT || "";
     modConfig.modResults.push({
         type: 'property',
         key: 'unityStreamingAssets',
@@ -38,11 +40,11 @@ const withGradlePropertiesMod = (config) => (0, config_plugins_1.withGradlePrope
     modConfig.modResults.push({
         type: 'property',
         key: 'unity.androidSdkPath',
-        value: '${ANDROID_SDK_ROOT}',
+        value: androidSdkPath,
     }, {
         type: 'property',
         key: 'unity.androidNdkPath',
-        value: '${ANDROID_NDK_ROOT}',
+        value: androidNdkPath,
     });
     return modConfig;
 });

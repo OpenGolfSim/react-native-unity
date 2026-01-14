@@ -105,6 +105,9 @@ const withAndroidManifestMod: ConfigPlugin = (config) =>
     if (application?.$) {
       application.$["tools:replace"] = "android:enableOnBackInvokedCallback";
     }
+    if (application && !application.$['xmlns:tools']) {
+      application.$['xmlns:tools'] = 'http://schemas.android.com/tools';
+    }
     return config;
   });
 

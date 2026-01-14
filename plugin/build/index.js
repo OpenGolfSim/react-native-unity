@@ -72,6 +72,9 @@ const withAndroidManifestMod = (config) => (0, config_plugins_1.withAndroidManif
     if (application?.$) {
         application.$["tools:replace"] = "android:enableOnBackInvokedCallback";
     }
+    if (application && !application.$['xmlns:tools']) {
+        application.$['xmlns:tools'] = 'http://schemas.android.com/tools';
+    }
     return config;
 });
 exports.default = withUnity;

@@ -4,6 +4,7 @@ import {
   withProjectBuildGradle,
   withSettingsGradle,
   withStringsXml,
+  withAndroidManifest
 } from '@expo/config-plugins';
 import type { ConfigPlugin } from '@expo/config-plugins';
 
@@ -16,6 +17,7 @@ const withUnity: ConfigPlugin<{ name?: string }> = (
   config = withSettingsGradleMod(config);
   config = withGradlePropertiesMod(config);
   config = withStringsXMLMod(config);
+  config = withAndroidManifestMod(config);
   return config;
 };
 
@@ -60,6 +62,7 @@ const withGradlePropertiesMod: ConfigPlugin = (config) =>
 // add string
 const withStringsXMLMod: ConfigPlugin = (config) =>
   withStringsXml(config, (config) => {
+    // tools:replace="android:enableOnBackInvokedCallback"
     config.modResults = AndroidConfig.Strings.setStringItem(
       [
         {
@@ -71,6 +74,23 @@ const withStringsXMLMod: ConfigPlugin = (config) =>
       ],
       config.modResults
     );
+    return config;
+  });
+
+const withAndroidManifestMod: ConfigPlugin = (config) =>
+  withAndroidManifest(config, (config) => {
+    // tools:replace="android:enableOnBackInvokedCallback"
+    // Get the main manifest
+    const manifest = config.modResults.manifest;
+
+    // Find the application tag (it is an array with one element in this structure)
+    const application = manifest.application?.[0];
+
+    // Add or modify attributes for the application tag
+    // The attributes are stored under the '$' key
+    if (application?.$) {
+      application.$["tools:replace"] = "android:enableOnBackInvokedCallback";
+    }
     return config;
   });
 

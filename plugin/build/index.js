@@ -7,6 +7,7 @@ const withUnity = (config, { name = 'react-native-unity' } = {}) => {
     config = withSettingsGradleMod(config);
     config = withGradlePropertiesMod(config);
     config = withStringsXMLMod(config);
+    config = withAndroidManifestMod(config);
     return config;
 };
 const REPOSITORIES_END_LINE = `maven { url 'https://www.jitpack.io' }`;
@@ -38,6 +39,7 @@ const withGradlePropertiesMod = (config) => (0, config_plugins_1.withGradlePrope
 });
 // add string
 const withStringsXMLMod = (config) => (0, config_plugins_1.withStringsXml)(config, (config) => {
+    // tools:replace="android:enableOnBackInvokedCallback"
     config.modResults = config_plugins_1.AndroidConfig.Strings.setStringItem([
         {
             _: 'Game View',
@@ -46,6 +48,19 @@ const withStringsXMLMod = (config) => (0, config_plugins_1.withStringsXml)(confi
             },
         },
     ], config.modResults);
+    return config;
+});
+const withAndroidManifestMod = (config) => (0, config_plugins_1.withAndroidManifest)(config, (config) => {
+    // tools:replace="android:enableOnBackInvokedCallback"
+    // Get the main manifest
+    const manifest = config.modResults.manifest;
+    // Find the application tag (it is an array with one element in this structure)
+    const application = manifest.application?.[0];
+    // Add or modify attributes for the application tag
+    // The attributes are stored under the '$' key
+    if (application?.$) {
+        application.$["tools:replace"] = "android:enableOnBackInvokedCallback";
+    }
     return config;
 });
 exports.default = withUnity;

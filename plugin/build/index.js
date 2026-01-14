@@ -35,6 +35,15 @@ const withGradlePropertiesMod = (config) => (0, config_plugins_1.withGradlePrope
         key: 'unityStreamingAssets',
         value: '.unity3d',
     });
+    modConfig.modResults.push({
+        type: 'property',
+        key: 'unity.androidSdkPath',
+        value: '${ANDROID_SDK_ROOT}',
+    }, {
+        type: 'property',
+        key: 'unity.androidNdkPath',
+        value: '${ANDROID_NDK_ROOT}',
+    });
     return modConfig;
 });
 // add string

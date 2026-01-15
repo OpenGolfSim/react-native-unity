@@ -1,8 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 const config_plugins_1 = require("@expo/config-plugins");
-const withUnity = (config, { name = 'react-native-unity' } = {}) => {
-    config.name = name;
+const withUnity = (config) => {
     config = withProjectBuildGradleMod(config);
     config = withSettingsGradleMod(config);
     config = withGradlePropertiesMod(config);
